@@ -1,0 +1,21 @@
+{
+    "include": ["remix.env.d.ts", "**/*.ts", "**/*.tsx", "remix.config.js"],
+    "compilerOptions": {
+      "lib": ["DOM", "DOM.Iterable", "ESNext"],
+      "isolatedModules": true,
+      "esModuleInterop": true,
+      "jsx": "react-jsx",
+      "moduleResolution": "Node",
+      "resolveJsonModule": true,
+      "target": "ESNext",
+      "strict": false,
+      "allowJs": true,
+      "forceConsistentCasingInFileNames": true,
+      "baseUrl": ".",
+      "paths": {
+        "~/*": ["./app/*"]
+      },
+      // Remix takes care of building everything in `remix build`.
+      "noEmit": true
+    }
+  }

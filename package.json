@@ -1,0 +1,24 @@
+{
+  "type": "module",
+  "scripts": {
+    "start": "npx remix-serve build/index.js"
+  },
+  "dependencies": {
+    "@remix-run/node": "^2.0.1",
+    "@remix-run/react": "^2.0.1",
+    "@remix-run/serve": "^2.0.1",
+    "@types/react": "^18.2.25",
+    "@types/react-dom": "^18.2.11",
+    "dotenv": "^16.3.1",
+    "isbot": "^3.7.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-hot-toast": "^2.4.1",
+    "remix-auth-discord": "github:JonnyBnator/remix-auth-discord#9020d7a2e731545dedf8eccca0e354c22e8e70bd",
+    "typescript": "^5.2.2"
+  },
+  "devDependencies": {
+    "@remix-run/dev": "^2.0.1",
+    "tailwindcss": "^3.3.3"
+  }
+}
