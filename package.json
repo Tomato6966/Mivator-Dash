@@ -1,7 +1,7 @@
 {
   "type": "module",
   "scripts": {
-    "start": "npx remix-serve build/index.js"
+    "start": "npx remix dev"
   },
   "dependencies": {
     "@remix-run/node": "^2.0.1",
