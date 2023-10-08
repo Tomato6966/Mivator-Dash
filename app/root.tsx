@@ -9,6 +9,7 @@ import { Links, Meta, Outlet, Scripts, useLoaderData, useSearchParams } from "@r
 import { LinksFunction, LoaderArgs } from "@remix-run/server-runtime";
 
 import { ToastMessageTypes } from "../utils/ToastMessages";
+import { requestGuild, requestMachine } from "./init.server";
 
 // https://icons8.com/icon/set/warn/fluency
 const ToastStyles = {
@@ -32,12 +33,25 @@ export async function loader({ request }: LoaderArgs) {
   url.searchParams.delete("tmsg", url.searchParams.get("tmsg"));
   url.searchParams.delete("ttext", url.searchParams.get("ttext"));
   url.searchParams.delete("tcontent", url.searchParams.get("tcontent"));
-  return json({ Toast });
+  const res = await requestMachine<number>(c => c.ws.ping);
+  const guildData = await requestGuild<{id:string,name:string,memberCount:number,icon:string,channelCount:number,roleCount:number}>("1070626568260562954", c => {
+    const guild = c.guilds.cache.get("1070626568260562954");
+    if(!guild) return null;
+    return {
+      id: guild.id,
+      name: guild.name,
+      memberCount: guild.memberCount,
+      icon: guild.icon,
+      channelCount: guild.channels.cache.size,
+      roleCount: guild.roles.cache.size
+    }
+  })
+  return json({ Toast, res, guildData });
 }
 
 
 export default function App() {
-  const { Toast } = useLoaderData<typeof loader>();
+  const { Toast, res, guildData } = useLoaderData<typeof loader>();
   
   // If Toast Available
   if(Toast.type) {
@@ -96,6 +110,7 @@ export default function App() {
     }, [Toast]);
   }
 
+  
   return (
     <html>
       <head>
@@ -108,12 +123,15 @@ export default function App() {
       </head>
       <body>
         <h1>Hello world!</h1>
+        <p> Current ping: {res[0]} </p>
+        <p> DevGuild: {guildData.memberCount} Members on {guildData.channelCount} Channels on {guildData.roleCount} Roles in {guildData.name} </p>
         <Outlet />
 
         <Toaster position="bottom-right" reverseOrder={true} toastOptions={{
           duration: 10000
         }}/>
-        
+
+
         <Scripts />
       </body>
     </html>
